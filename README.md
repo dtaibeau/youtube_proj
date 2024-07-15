@@ -76,14 +76,14 @@ The app is deployed and can be accessed at https://youtubeproj-dtaibeau.streamli
 1. **Fork the repository:**
 
 ```bash
-git clone https://github.com/yourusername/youtube-project.git
-cd youtube-project
+git clone https://github.com/yourusername/youtube_project.git
+cd youtube_project
 ```
 
 2. **Create your feature branch:**
 
 ```bash
-git checkout -b feature/AmazingFeature
+git checkout -b feature/awesome_feature
 ```
 
 3. **Commit your changes:**
@@ -102,7 +102,7 @@ git push origin feature/awesomeFeature
 
 - Go to forked repository on GitHub
 - Click on "New Pull Request" button
-- 
+  
 ## Future Updates
 - Adding feedback to indicate the app's progress to users during transcription process
 - Additional features and improvements based on user feedback :-)
