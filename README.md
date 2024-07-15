@@ -21,7 +21,7 @@ This project uses OpenAI's ChatGPT-4o to identify speakers and correct transcrip
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/youtube-project.git
+    git clone https://github.com/dtaibeau/youtube-project.git
     cd youtube-project
     ```
 
