@@ -4,18 +4,18 @@ This project uses OpenAI's ChatGPT-4o to identify speakers and correct transcrip
 
 ## Features
 
-- Fetch YouTube video details and transcripts.
-- Identify different speakers in the transcript.
-- Correct transcription errors.
-- Display the corrected transcript in a readable HTML format.
+- Fetch YouTube video details and transcripts
+- Identify different speakers in the transcript
+- Correct transcription errors
+- Display the corrected transcript in a readable HTML format
 
 ## Requirements
 
-- [Streamlit](https://streamlit.io) for the user interface.
-- [Pytube](https://pytube.io) for fetching video details.
-- [YouTube Transcript API](https://github.com/jdepoix/youtube-transcript-api) for obtaining video transcripts.
-- [LangChain](https://github.com/hwchase17/langchain) and [OpenAI's GPT-4](https://openai.com/research/gpt-4) for speaker identification and text correction.
-- [Pydantic](https://pydantic-docs.helpmanual.io) for data validation.
+- [Streamlit](https://streamlit.io) for the user interface
+- [Pytube](https://pytube.io) for fetching video details
+- [YouTube Transcript API](https://github.com/jdepoix/youtube-transcript-api) for obtaining video transcripts
+- [LangChain](https://github.com/hwchase17/langchain) and [OpenAI's GPT-4](https://openai.com/research/gpt-4) for speaker identification and text correction
+- [Pydantic](https://pydantic-docs.helpmanual.io) for data validation
 
 ## Installation
 
@@ -48,12 +48,12 @@ This project uses OpenAI's ChatGPT-4o to identify speakers and correct transcrip
     ```
 
 3. **Access the app:**
-   Open your web browser and go to `http://localhost:8501`
+   - Open your web browser and go to `http://localhost:8501`
 
-4. **Using the app:**
-   - Input a YouTube URL into the provided field.
-   - Click the "Process Video" button.
-   - View the processed and corrected transcript on the app interface.
+5. **Using the app:**
+   - Input a YouTube URL into the provided field
+   - Click the "Process Video" button
+   - View HTML of transcript on the app interface
 
 ## Project Structure
 
