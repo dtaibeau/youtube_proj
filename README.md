@@ -19,57 +19,92 @@ This project uses OpenAI's ChatGPT-4o to identify speakers and correct transcrip
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/yourusername/youtube-project.git
+    cd youtube-project
+    ```
 
-```bash
-git clone https://github.com/yourusername/youtube-project.git
-cd youtube-project
-```
+2. **Install Poetry if you haven't already:**
+    ```bash
+    curl -sSL https://install.python-poetry.org | python3 -
+    ```
 
-2. Install Poetry if you haven't already:
-
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
-
-3. Install the dependencies:
-
-```bash
-poetry install
-```
+3. **Install the dependencies:**
+    ```bash
+    poetry install
+    ```
 
 ## Usage
 
-1. Activate the virtual environment:
-```bash
-poetry shell
-```
+1. **Activate the virtual environment:**
+    ```bash
+    poetry shell
+    ```
 
-2. Run the Streamlit app:
-```bash
-streamlit run youtube_project/main.py
-```
+2. **Run the Streamlit app:**
+    ```bash
+    streamlit run youtube_project/main.py
+    ```
+
+3. **Access the app:**
+   Open your web browser and go to `http://localhost:8501`
+
+4. **Using the app:**
+   - Input a YouTube URL into the provided field.
+   - Click the "Process Video" button.
+   - View the processed and corrected transcript on the app interface.
 
 ## Project Structure
 
 ```plaintext
 ├── README.md            # Project README file
 ├── pyproject.toml       # Poetry configuration file
-├── poetry.lock          # Poetry lock file 
+├── poetry.lock          # Poetry lock file
 ├── transcript.json      # Example JSON transcript
-├── src/                 # Source files/packages
+├── .gitignore           # Git ignore file
+├── youtube_project/     # Source files/packages
 │   ├── main.py          # Main script for Streamlit app
 ├── tests/               # Test files
 │   ├── test_transcripts.py # Example test file
-├──
 ```
 
+## Deployment
+The app is deployed and can be accessed at https://youtubeproj-dtaibeau.streamlit.app/. Just input a YouTube URL and click "Process Video" to the transcription process in action!
+
 ## How to Contribute
+1. **Fork the repository:**
 
-1. Fork the repository
-2. Create your feature branch (git checkout -b feature/AmazingFeature)
-3. Commit your changes (git commit -m 'Add some AmazingFeature')
-4. Push to the branch (git push origin feature/AmazingFeature)
-5. Open a pull request
+```bash
+git clone https://github.com/yourusername/youtube-project.git
+cd youtube-project
+```
 
-Happy transcripting! :D
+2. **Create your feature branch:**
+
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+3. **Commit your changes:**
+
+```bash
+git commit -m 'add some awesome feature'
+```
+
+4. **Push to the branch:**
+
+```bash
+git push origin feature/awesomeFeature
+```
+
+5. **Open a pull request:**
+
+- Go to forked repository on GitHub
+- Click on "New Pull Request" button
+- 
+## Future Updates
+- Adding feedback to indicate the app's progress to users during transcription process
+- Additional features and improvements based on user feedback :-)
+
+Happy transcripting!
