@@ -1,0 +1,22 @@
+# .gitignore
+
+# Ignore environment files
+.env
+
+# Ignore Python virtual environments
+.venv/
+env/
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore Streamlit secrets
+.streamlit/secrets.toml
