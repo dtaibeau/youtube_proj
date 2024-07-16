@@ -56,7 +56,7 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
 # identifying speakers and correcting transcript w/ langchain
 def identify_and_correct_speakers(title: str, description: str, transcript: List[Dict[str, str]]) -> TranscriptWithSpeakers:
     print("Initializing LLMChain...") # debug print
-    llm = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
+    llm = ChatOpenAI(model="gpt-4o", openai_api_key=openai_api_key)
 
     prompt_template = PromptTemplate.from_template(
         """You are given a video, and your task is to identify the different speakers' names and correct the text.
@@ -129,40 +129,40 @@ def identify_and_correct_speakers(title: str, description: str, transcript: List
 def save_transcript_to_json(transcript: TranscriptWithSpeakers, filename: str):
     print(f"Saving transcript to {filename}...")
     with open(filename, 'w') as f:
-        json.dump(transcript.dict(), f, indent=4)
+        json.dump(transcript.model_dump(), f, indent=4)
     print("Transcript saved successfully.")
 
 # correct transcription errors
-def iterative_correction(transcript: TranscriptWithSpeakers, title: str, description: str) -> TranscriptWithSpeakers:
-    llm = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
+# def iterative_correction(transcript: TranscriptWithSpeakers, title: str, description: str) -> TranscriptWithSpeakers:
+#     llm = ChatOpenAI(model="gpt-4o", openai_api_key=openai_api_key)
 
-    correction_prompt_template = PromptTemplate.from_template(
-        """You are given a transcript with identified speakers. Your task is to correct any errors in the speaker identification and text.
-        Given the video title: {title} and description: {description}, correct the following transcript segments:
+#     correction_prompt_template = PromptTemplate.from_template(
+#         """You are given a transcript with identified speakers. Your task is to correct any errors in the speaker identification and text.
+#         Given the video title: {title} and description: {description}, correct the following transcript segments:
         
-        Transcript:
-        {transcript}
+#         Transcript:
+#         {transcript}
         
-        Provide the output in JSON format with a 'segments' key, and each segment should contain 'speaker' and 'text'."""
-    )
+#         Provide the output in JSON format with a 'segments' key, and each segment should contain 'speaker' and 'text'."""
+#     )
 
-    parser = PydanticOutputParser(pydantic_object=TranscriptWithSpeakers)
-    correction_chain = correction_prompt_template | llm | parser
+#     parser = PydanticOutputParser(pydantic_object=TranscriptWithSpeakers)
+#     correction_chain = correction_prompt_template | llm | parser
 
-    transcript_text = "\n".join([f"{segment.speaker}: {segment.text}" for segment in transcript.segments])
-    inputs = {"title": title, "description": description, "transcript": transcript_text}
+#     transcript_text = "\n".join([f"{segment.speaker}: {segment.text}" for segment in transcript.segments])
+#     inputs = {"title": title, "description": description, "transcript": transcript_text}
     
-    try:
-        print("Invoking correction LLMChain...")
-        corrected_response = correction_chain.invoke(inputs)
-        if isinstance(corrected_response, TranscriptWithSpeakers):
-            return corrected_response
-        else:
-            print("Correction response validation failed.")
-            raise ValueError("The correction response format is incorrect. Expected a dictionary with 'segments' key.")
-    except Exception as e:
-        print(f"Error during correction: {e}")
-        return transcript
+#     try:
+#         print("Invoking correction LLMChain...")
+#         corrected_response = correction_chain.invoke(inputs)
+#         if isinstance(corrected_response, TranscriptWithSpeakers):
+#             return corrected_response
+#         else:
+#             print("Correction response validation failed.")
+#             raise ValueError("The correction response format is incorrect. Expected a dictionary with 'segments' key.")
+#     except Exception as e:
+#         print(f"Error during correction: {e}")
+#         return transcript
 
 def json_to_html(transcript: TranscriptWithSpeakers) -> str:
     html = "<html><head><style>"
@@ -210,10 +210,10 @@ def main():
             print(f"Video Title: {title}")
             print(f"Video Description: {description}")
             identified_transcript = identify_and_correct_speakers(title, description, transcript)
-            corrected_transcript = iterative_correction(identified_transcript, title, description)
-            html_output = json_to_html(corrected_transcript)
+            # corrected_transcript = iterative_correction(identified_transcript, title, description)
+            html_output = json_to_html(combined_transcript)
             st.markdown(html_output, unsafe_allow_html=True)
-            save_transcript_to_json(corrected_transcript, "transcript.json")
+            save_transcript_to_json(combined_transcript, "transcript.json")
         else:
             st.error("Failed to fetch video details or transcript.")
 
