@@ -76,7 +76,7 @@ The app is deployed and can be accessed at https://youtubeproj-dtaibeau.streamli
 1. **Fork the repository:**
 
 ```bash
-git clone https://github.com/yourusername/youtube_project.git
+git clone https://github.com/dtaibeau/youtube_project.git
 cd youtube_project
 ```
 
