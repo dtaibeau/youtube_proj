@@ -54,7 +54,7 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
         return None
 
 # identifying speakers and correcting transcript w/ langchain
-def identify_and_correct_speakers(title: str, description: str, transcript: List[Dict[str, str]]) -> TranscriptWithSpeakers:
+def identify_speakers(title: str, description: str, transcript: List[Dict[str, str]]) -> TranscriptWithSpeakers:
     print("Initializing LLMChain...") # debug print
     llm = ChatOpenAI(model="gpt-4o", openai_api_key=openai_api_key)
 
@@ -209,11 +209,11 @@ def main():
             title, description, transcript = details
             print(f"Video Title: {title}")
             print(f"Video Description: {description}")
-            identified_transcript = identify_and_correct_speakers(title, description, transcript)
+            identified_transcript = identify_speakers(title, description, transcript)
             # corrected_transcript = iterative_correction(identified_transcript, title, description)
-            html_output = json_to_html(combined_transcript)
+            html_output = json_to_html(identified_transcript)
             st.markdown(html_output, unsafe_allow_html=True)
-            save_transcript_to_json(combined_transcript, "transcript.json")
+            save_transcript_to_json(identified_transcript, "transcript.json")
         else:
             st.error("Failed to fetch video details or transcript.")
 
