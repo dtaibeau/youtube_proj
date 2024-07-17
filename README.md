@@ -103,8 +103,6 @@ git push origin feature/awesomeFeature
 - Go to forked repository on GitHub
 - Click on "New Pull Request" button
 
-## Contributions
-
   
 ## Future Updates
 - Adding feedback to indicate the app's progress to users during transcription process
