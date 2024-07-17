@@ -13,7 +13,7 @@ import time
 
 openai_api_key = st.secrets["api_keys"]["openai_api_key"]
 
-# pydantic models
+### pydantic models
 class TranscriptSegment(BaseModel):
     """Data model for transcript segment"""
     speaker: str = Field(description="Name of the speaker")
@@ -23,7 +23,7 @@ class TranscriptWithSpeakers(BaseModel):
     """Data model for transcript with identified speakers"""
     segments: List[TranscriptSegment] = Field(description="List of transcript segments with identified speaker names")
 
-# video details + transcript using pytube and youtube_transcript_api
+### video details + transcript using pytube and youtube_transcript_api
 def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[Dict[str, str]]]]:
     """
     Fetches video details and transcript for given YouTube URL.
@@ -53,7 +53,7 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
         st.error(f"General Error: {e}")
         return None
 
-# identifying speakers and correcting transcript w/ langchain
+### identifying speakers and correcting transcript w/ langchain
 def identify_speakers(title: str, description: str, transcript: List[Dict[str, str]]) -> TranscriptWithSpeakers:
     print("Initializing LLMChain...") # debug print
     llm = ChatOpenAI(model="gpt-4o", openai_api_key=openai_api_key)
@@ -76,7 +76,7 @@ def identify_speakers(title: str, description: str, transcript: List[Dict[str, s
     # debug print
     print("Transcript:", transcript)
 
-    # batching
+    ### batching
     grouped_transcript = []
     current_speaker = transcript[0]['text']  # debug print
     current_text = []
@@ -97,7 +97,7 @@ def identify_speakers(title: str, description: str, transcript: List[Dict[str, s
     # debug print
     print("Grouped Transcript:", grouped_transcript)
 
-    # batch processing
+    ### batch processing
     batch_size = 20
     transcript_batches = [grouped_transcript[i:i + batch_size] for i in range(0, len(grouped_transcript), batch_size)]
     responses = []
@@ -125,14 +125,14 @@ def identify_speakers(title: str, description: str, transcript: List[Dict[str, s
     combined_transcript = TranscriptWithSpeakers(segments=responses)
     return combined_transcript
 
-# save transcript to JSON
+### save transcript to JSON
 def save_transcript_to_json(transcript: TranscriptWithSpeakers, filename: str):
     print(f"Saving transcript to {filename}...")
     with open(filename, 'w') as f:
         json.dump(transcript.model_dump(), f, indent=4)
     print("Transcript saved successfully.")
 
-# correct transcription errors
+### correct transcription errors
 # def iterative_correction(transcript: TranscriptWithSpeakers, title: str, description: str) -> TranscriptWithSpeakers:
 #     llm = ChatOpenAI(model="gpt-4o", openai_api_key=openai_api_key)
 
@@ -193,7 +193,7 @@ def json_to_html(transcript: TranscriptWithSpeakers) -> str:
     html += "</div></body></html>"
     return html
 
-# streamlit
+### streamlit
 def main():
     st.title("YouTube Speaker Identification and Transcript Correction")
     url = st.text_input("Enter YouTube URL:")
@@ -209,6 +209,7 @@ def main():
             title, description, transcript = details
             print(f"Video Title: {title}")
             print(f"Video Description: {description}")
+            print("Hello!")
             identified_transcript = identify_speakers(title, description, transcript)
             # corrected_transcript = iterative_correction(identified_transcript, title, description)
             html_output = json_to_html(identified_transcript)
