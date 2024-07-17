@@ -14,7 +14,7 @@ This project uses OpenAI's ChatGPT-4o to identify speakers and correct transcrip
 - [Streamlit](https://streamlit.io) for the user interface
 - [Pytube](https://pytube.io) for fetching video details
 - [YouTube Transcript API](https://github.com/jdepoix/youtube-transcript-api) for obtaining video transcripts
-- [LangChain](https://github.com/hwchase17/langchain) and [OpenAI's GPT-4](https://openai.com/research/gpt-4) for speaker identification and text correction
+- [LangChain](https://github.com/hwchase17/langchain) and [OpenAI's GPT-4o](https://openai.com/research/gpt-4) for speaker identification and text correction
 - [Pydantic](https://pydantic-docs.helpmanual.io) for data validation
 
 ## Installation
@@ -102,6 +102,9 @@ git push origin feature/awesomeFeature
 
 - Go to forked repository on GitHub
 - Click on "New Pull Request" button
+
+## Contributions
+
   
 ## Future Updates
 - Adding feedback to indicate the app's progress to users during transcription process
