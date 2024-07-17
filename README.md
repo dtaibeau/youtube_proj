@@ -58,19 +58,19 @@ This project uses OpenAI's ChatGPT-4o to identify speakers and correct transcrip
 ## Project Structure
 
 ```plaintext
-├── README.md            # Project README file
-├── pyproject.toml       # Poetry configuration file
-├── poetry.lock          # Poetry lock file
-├── transcript.json      # Example JSON transcript
-├── .gitignore           # Git ignore file
-├── youtube_project/     # Source files/packages
-│   ├── main.py          # Main script for Streamlit app
-├── tests/               # Test files
-│   ├── test_transcripts.py # Example test file
+├── README.md                # Project README file
+├── pyproject.toml           # Poetry configuration file
+├── poetry.lock              # Poetry lock file
+├── transcript.json          # Example JSON transcript
+├── .gitignore               # Git ignore file
+├── youtube_project/         # Source files/packages
+│   ├── main.py              # Main script for Streamlit app
+├── tests/                   # Test files
+│   ├── test_transcripts.py  # Example test file
 ```
 
 ## Deployment
-The app is deployed and can be accessed at https://youtubeproj-dtaibeau.streamlit.app/. Just input a YouTube URL and click "Process Video" to the transcription process in action!
+The app is deployed and can be accessed at https://youtubeproj-dtaibeau.streamlit.app/. Just input a YouTube URL and click "Process Video" to see the transcription process in action!
 
 ## How to Contribute
 1. **Fork the repository:**
