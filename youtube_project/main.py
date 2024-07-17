@@ -1,5 +1,6 @@
 import json
 from pytube import YouTube
+import youtube_dl
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
@@ -39,7 +40,17 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
         st.write("Fetching video details...") # debug print
         yt = YouTube(url)
         title = yt.title
-        description = yt.vid_info.get('videoDetails', {}).get('shortDescription')
+        
+        # fetch description using youtube_dl
+        ydl_opts = {
+            'quiet': True,
+            'skip_download': True,
+            'force_generic_extractor': True,
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(url, download=False)
+            description = info_dict.get('description', None)
+        
         st.write(f"Fetched description: {description}")
         video_id = yt.video_id
         st.write(f"Video ID: {video_id}")
