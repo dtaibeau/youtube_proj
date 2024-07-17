@@ -105,6 +105,7 @@ git push origin feature/awesomeFeature
   
 ## Future Updates
 - Adding feedback to indicate the app's progress to users during transcription process
+- Pytube description bug fix
 - Additional features and improvements based on user feedback :-)
 
 Happy transcripting!
