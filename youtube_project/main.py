@@ -36,15 +36,15 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
         or None if an error occurs
     """
     try:
-        print("Fetching video details...") # debug print
+        st.write("Fetching video details...") # debug print
         yt = YouTube(url)
         title = yt.title
         description = yt.description
         video_id = yt.video_id
-        print(f"Video ID: {video_id}")
-        print("Fetching transcript...") # debug print
+        st.write(f"Video ID: {video_id}")
+        st.write("Fetching transcript...") # debug print
         transcript = YouTubeTranscriptApi.get_transcript(video_id)
-        print("Transcript fetched successfully") # debug print
+        st.write("Transcript fetched successfully") # debug print
         return title, description, transcript
     except TranscriptsDisabled as e:
         st.error(f"Transcript API Error: {e}")
@@ -55,7 +55,7 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
 
 ### identifying speakers and correcting transcript w/ langchain
 def identify_speakers(title: str, description: str, transcript: List[Dict[str, str]]) -> TranscriptWithSpeakers:
-    print("Initializing LLMChain...") # debug print
+    st.write("Initializing LLMChain...") # debug print
     llm = ChatOpenAI(model="gpt-4o", openai_api_key=openai_api_key)
 
     prompt_template = PromptTemplate.from_template(
@@ -74,7 +74,7 @@ def identify_speakers(title: str, description: str, transcript: List[Dict[str, s
     chain = prompt_template | llm | parser
     
     # debug print
-    print("Transcript:", transcript)
+    st.write("Transcript:", transcript)
 
     ### batching
     grouped_transcript = []
@@ -95,7 +95,7 @@ def identify_speakers(title: str, description: str, transcript: List[Dict[str, s
     grouped_transcript.append({"speaker": current_speaker, "text": " ".join(current_text)})
     
     # debug print
-    print("Grouped Transcript:", grouped_transcript)
+    st.write("Grouped Transcript:", grouped_transcript)
 
     ### batch processing
     batch_size = 20
@@ -103,34 +103,34 @@ def identify_speakers(title: str, description: str, transcript: List[Dict[str, s
     responses = []
 
     for i, batch in enumerate(transcript_batches):
-        print(f"Processing batch {i + 1} of {len(transcript_batches)}")
+        st.write(f"Processing batch {i + 1} of {len(transcript_batches)}")
         transcript_text = "\n".join([f"{segment['speaker']}: {segment['text']}" for segment in batch])
         inputs = {"title": title, "description": description, "transcript": transcript_text}
         
         try:
-            print("Invoking LLMChain for batch...")
+            st.write("Invoking LLMChain for batch...")
             start_time = time.time()
             response = chain.invoke(inputs)
             end_time = time.time()
-            print(f"LLMChain invocation complete for batch. Time taken: {end_time - start_time} seconds")
+            st.write(f"LLMChain invocation complete for batch. Time taken: {end_time - start_time} seconds")
             
             if isinstance(response, TranscriptWithSpeakers):
                 responses.extend(response.segments)
             else:
-                print("Response validation failed for batch.")
+                st.write("Response validation failed for batch.")
                 raise ValueError("The response format is incorrect. Expected a dictionary with 'segments' key.")
         except Exception as e:
-            print(f"Error processing batch {i + 1}: {e}")
+            st.write(f"Error processing batch {i + 1}: {e}")
     
     combined_transcript = TranscriptWithSpeakers(segments=responses)
     return combined_transcript
 
 ### save transcript to JSON
 def save_transcript_to_json(transcript: TranscriptWithSpeakers, filename: str):
-    print(f"Saving transcript to {filename}...")
+    st.write(f"Saving transcript to {filename}...")
     with open(filename, 'w') as f:
         json.dump(transcript.model_dump(), f, indent=4)
-    print("Transcript saved successfully.")
+    st.write("Transcript saved successfully.")
 
 ### correct transcription errors
 # def iterative_correction(transcript: TranscriptWithSpeakers, title: str, description: str) -> TranscriptWithSpeakers:
@@ -199,7 +199,7 @@ def main():
     url = st.text_input("Enter YouTube URL:")
     
     if st.button("Process Video"):
-        print("Process button clicked.")
+        st.write("Process button clicked.")
         
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future_video_details = executor.submit(get_video_details_and_transcript, url)
@@ -207,8 +207,8 @@ def main():
         
         if details:
             title, description, transcript = details
-            print(f"Video Title: {title}")
-            print(f"Video Description: {description}")
+            st.write(f"Video Title: {title}")
+            st.write(f"Video Description: {description}")
             identified_transcript = identify_speakers(title, description, transcript)
             # corrected_transcript = iterative_correction(identified_transcript, title, description)
             html_output = json_to_html(identified_transcript)
