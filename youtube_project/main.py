@@ -195,7 +195,7 @@ def json_to_html(transcript: TranscriptWithSpeakers) -> str:
 
 ### streamlit
 def main():
-    st.title("YouTube Speaker Identification and Transcript Correction")
+    st.title("YouTube Transcription and Speaker Identification")
     url = st.text_input("Enter YouTube URL:")
     
     if st.button("Process Video"):
@@ -209,7 +209,6 @@ def main():
             title, description, transcript = details
             print(f"Video Title: {title}")
             print(f"Video Description: {description}")
-            print("Hello!")
             identified_transcript = identify_speakers(title, description, transcript)
             # corrected_transcript = iterative_correction(identified_transcript, title, description)
             html_output = json_to_html(identified_transcript)
