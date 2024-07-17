@@ -40,7 +40,7 @@ def get_video_details_and_transcript(url: str) -> Optional[tuple[str, str, List[
         yt = YouTube(url)
         title = yt.title
         description = yt.description if yt.description and yt.description != 'None' else "No description available"
-        print(f"{yt.description}")
+        st.write(f"{yt.description}")
         video_id = yt.video_id
         st.write(f"Video ID: {video_id}")
         st.write("Fetching transcript...") # debug print
